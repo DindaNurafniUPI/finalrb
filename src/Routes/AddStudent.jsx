@@ -1,28 +1,28 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import NavBar from "../components/Navbar";
 
 
-const AddStudent = () => {
-  const history = useHistory();
-  const [formData, setFormData] = useState({
-    fullname: "",
-    profilePicture: "",
-    address: "",
-    phoneNumber: "",
-    birthDate: "",
-    gender: "",
-    programStudy: "",
-  });
+const AddStudent = (props) => {
+  //belum definisi contoh
+  const [fullName, setFullName] = useState("");
+  const [picture, setPicture] = useState("");
+  //lanjutkan
 
-  const handleInputChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
+  // const history = useHistory();
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const formData = {
+      fullname: "",
+      profilePicture: "",
+      address: "",
+      phoneNumber: "",
+      birthDate: "",
+      gender: "",
+      programStudy: "",
+    };
 
     // Set faculty based on program study
     let faculty = "";
@@ -51,26 +51,37 @@ const AddStudent = () => {
         break;
     }
 
-    const newStudent = {
-      ...formData,
-      faculty: faculty,
-    };
+    //ini ndak usah
+  //   const newStudent = {
+  //     ...formData,
+  //     faculty: faculty,
+  //   };
 
-    fetch("http://localhost:3000/students", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newStudent),
-    })
-      .then(() => {
-        history.push("/student");
-      })
-      .catch((error) => console.log(error));
+  props.handleadd(formData);
+
+  //terus dikasih set value contoh
+
+  setFullName("");
+  setPicture("");
+
+  //ini dipindah app.js
+  //   fetch("http://localhost:3000/students", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(newStudent),
+  //   })
+  //     .then(() => {
+  //       history.push("/student");
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
   };
 
   return (
     <>
+    <NavBar />
       <h2>Add Student</h2>
       <form onSubmit={handleSubmit}>
         <div>
